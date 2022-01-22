@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\SurvivorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::apiResource('survivors', SurvivorController::class)->except('destroy');
+Route::post('survivors/{survivor}/last-location', [SurvivorController::class, 'updateSurvivorLocation']);
+Route::post('survivors/{survivor}/flag-survivor-infected', [SurvivorController::class, 'flagSurvivorAsInfected']);
