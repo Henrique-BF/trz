@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\FlagSurvivorAction;
+use App\Http\Requests\FlagSurvivorAsInfectedRequest;
 use App\Http\Requests\StoreSurvivorRequest;
 use App\Http\Requests\UpdateLastLocationRequest;
 use App\Http\Requests\UpdateSurvivorRequest;
@@ -48,24 +50,11 @@ class SurvivorController extends Controller
         return $survivor->lastLocation->update($request->validated());
     }
 
-    public function flagSurvivorAsInfected(Survivor $survivor)
+    public function flagSurvivorAsInfected(FlagSurvivorAsInfectedRequest $request, FlagSurvivorAction $action)
     {
-        if($survivor->infected->was_infected) return ['message' => 'was infected'];
+        $survivor = Survivor::where('id', $request->survivor_id)->first();
+        $flag_survivor = Survivor::where('id', $request->flag_survivor_id)->first();
         
-        $count = $survivor->infected->flags_count + 1;
-        $count <= 4
-        ? $survivor->infected->update([
-            'flags_count' => $count
-        ])
-        : $survivor->infected->update([
-            'flags_count' => $count,
-            'was_infected' => true
-        ]);
-        
-        return [
-            'message' => 'reported',
-            'count' => $count,
-            'infected' => $survivor->infected->was_infected
-        ];
+        return $action->flagSurvivorAsInfected($survivor, $flag_survivor);
     }
 }

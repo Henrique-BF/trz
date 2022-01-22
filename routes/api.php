@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SurvivorController;
+use App\Http\Controllers\TradeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,4 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('survivors', SurvivorController::class)->except('destroy');
 Route::post('survivors/{survivor}/last-location', [SurvivorController::class, 'updateSurvivorLocation']);
-Route::post('survivors/{survivor}/flag-survivor-infected', [SurvivorController::class, 'flagSurvivorAsInfected']);
+Route::post('survivors/flag-survivor-infected', [SurvivorController::class, 'flagSurvivorAsInfected']);
+
+Route::post('trade', [TradeController::class, 'trade']);
