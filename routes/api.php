@@ -19,4 +19,4 @@ Route::apiResource('survivors', SurvivorController::class)->except('destroy');
 Route::post('survivors/{survivor}/last-location', [SurvivorController::class, 'updateSurvivorLocation']);
 Route::post('survivors/flag-survivor-infected', [SurvivorController::class, 'flagSurvivorAsInfected']);
 
-Route::post('trade', [TradeController::class, 'trade']);
+Route::post('survivors/trade', [TradeController::class, 'trade'])->name('trade');
