@@ -23,10 +23,10 @@ class MakeReportAction
         $total_points_lost = $this->getTotalPointsLost($infecteds);
         
         return [
-            'Infected survivors' => $percent_survivors_infected,
-            'Not infected survivors' => 100 - $percent_survivors_infected,
+            'Infected survivors' => number_format($percent_survivors_infected, 2),
+            'Not infected survivors' => number_format(100 - $percent_survivors_infected, 2),
             'Average amount of each kind of resource by the survivor' => $avarege,
-            'Points lost' => $total_points_lost,
+            'Points lost' => number_format($total_points_lost, 2),
         ];
     }
 
@@ -40,7 +40,7 @@ class MakeReportAction
             {
                 $total = $total + $inventory->pivot->qty;
             }
-            $avarege[$item->name] = $total / $total_survivors;
+            $avarege[$item->name] = number_format($total / $total_survivors, 2);
         }
         return $avarege;
     }

@@ -23,15 +23,16 @@ class FlagSurvivorAction
 
     private function countReports($flag_survivor)
     {
-        $count = $flag_survivor->infected->flags_count + 1;
-        $count <= 4
-        ? $flag_survivor->infected->update([
-            'flags_count' => $count
-        ])
-        : $flag_survivor->infected->update([
-            'flags_count' => $count,
-            'was_infected' => true
-        ]);
+        $count = Report::where('flag_survivor_id', $flag_survivor->id)->count();
+        
+        $count == 5
+            ? $flag_survivor->infected->update([
+                'flags_count' => $count,
+                'was_infected' => true
+            ])
+            : $flag_survivor->infected->update([
+                'flags_count' => $count + 1
+            ]);
 
         return $count;
     }
