@@ -16,6 +16,9 @@
         <include>
             <directory suffix=".php">./app</directory>
         </include>
+        <report>
+            <html outputDirectory="coverage/html" lowUpperBound="70" highLowerBound="90"/>
+        </report>
     </coverage>
     <php>
         <server name="APP_ENV" value="testing"/>

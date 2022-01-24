@@ -27,6 +27,16 @@ class TradeTest extends TestCase
         $this->survivor_2 = Survivor::factory()->notInfected()->create();
     }
 
+    public function text_index_items()
+    {
+        $uri = route('get_items');
+
+        $this->getJson($uri)
+            ->assertSuccessful()
+            ->assertJsonCount($this->items->count())
+            ->assertJsonFragment($this->items);
+    }
+
     public function test_trade_with_correct_amount_of_points_and_items_on_inventory()
     {
         $this->setUpItemsInSurvivors();
