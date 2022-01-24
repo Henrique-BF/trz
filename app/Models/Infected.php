@@ -13,7 +13,7 @@ class Infected extends Model
         'was_infected', 'flags_count'
     ];
 
-    public function suvivor()
+    public function survivor()
     {
         return $this->belongsTo(Survivor::class);
     }

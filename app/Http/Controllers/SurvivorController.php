@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\FlagSurvivorAction;
-use App\Http\Requests\FlagSurvivorAsInfectedRequest;
 use App\Http\Requests\StoreSurvivorRequest;
 use App\Http\Requests\UpdateLastLocationRequest;
 use App\Http\Requests\UpdateSurvivorRequest;
@@ -14,7 +12,7 @@ class SurvivorController extends Controller
 {
     public function index()
     {
-        return Survivor::all();
+        return Survivor::with('lastLocation', 'infected')->get();
     }
 
     public function store(StoreSurvivorRequest $request)
@@ -31,7 +29,7 @@ class SurvivorController extends Controller
                     ['qty' => $item['qty']]
                 );
             }
-            return $survivor->load('inventory', 'lastLocation', 'inventory.items');
+            return $survivor->load('inventory', 'lastLocation', 'inventory.items', 'infected');
         });
     }
 
@@ -42,19 +40,13 @@ class SurvivorController extends Controller
 
     public function update(UpdateSurvivorRequest $request, Survivor $survivor)
     {
-        return $survivor->update($request->validated());
+        $response = $survivor->update($request->validated());
+        return $response ? ['message' => 'Updated'] : ['message' => 'Fail']; 
     }
 
     public function updateSurvivorLocation(UpdateLastLocationRequest $request, Survivor $survivor)
     {
-        return $survivor->lastLocation->update($request->validated());
-    }
-
-    public function flagSurvivorAsInfected(FlagSurvivorAsInfectedRequest $request, FlagSurvivorAction $action)
-    {
-        $survivor = Survivor::where('id', $request->survivor_id)->first();
-        $flag_survivor = Survivor::where('id', $request->flag_survivor_id)->first();
-        
-        return $action->flagSurvivorAsInfected($survivor, $flag_survivor);
+        $response = $survivor->lastLocation->update($request->validated());
+        return $response ? ['message' => 'Updated'] : ['message' => 'Fail'];
     }
 }

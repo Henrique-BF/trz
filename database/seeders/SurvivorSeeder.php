@@ -14,6 +14,6 @@ class SurvivorSeeder extends Seeder
      */
     public function run()
     {
-        Survivor::factory()->create();
+        Survivor::factory()->notInfected()->create();
     }
 }

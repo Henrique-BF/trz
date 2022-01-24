@@ -12,4 +12,9 @@ class Report extends Model
     protected $fillable = [
         'survivor_id', 'flag_survivor_id'
     ];
+
+    public function survivor()
+    {
+        return $this->belongsTo(Survivor::class);
+    }
 }

@@ -27,4 +27,9 @@ class Survivor extends Model
     {
         return $this->hasOne(Infected::class);
     }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
 }

@@ -8,12 +8,6 @@ class FlagSurvivorAction
 {
     public function flagSurvivorAsInfected($survivor, $flag_survivor)
     {
-        $report = Report::where('survivor_id', $survivor->id)
-            ->where('flag_survivor_id', $flag_survivor->id)
-            ->first();
-        
-        if($survivor->infected->was_infected || isset($report)) return ['message' => 'unauthorized'];
-
         if($flag_survivor->infected->was_infected) return ['message' => 'was infected'];
         
         $this->createReport($survivor, $flag_survivor);
