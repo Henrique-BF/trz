@@ -30,6 +30,7 @@ class StoreSurvivorRequest extends FormRequest
             'gender' => ['required', Rule::in(['male', 'female'])],
             'latitude' => ['required', 'numeric', 'between:-90,90'], 
             'longitude' => ['required', 'numeric', 'between:-90,90'],
+            'items' => ['required', 'array'],
             'items.*.id' => ['required', 'exists:items,id'],
             'items.*.qty' => ['required', 'integer'],
         ];

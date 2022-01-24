@@ -17,7 +17,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::apiResource('survivors', SurvivorController::class)->except('destroy');
-Route::post('survivors/{survivor}/last-location', [SurvivorController::class, 'updateSurvivorLocation']);
-Route::post('survivors/flag-survivor-infected', [ReportController::class, 'flagSurvivorAsInfected']);
-Route::get('resume-reports', [ReportController::class, 'index']);
-Route::post('survivors/trade', [TradeController::class, 'trade'])->name('trade');
+Route::post('survivors/{survivor}/last-location', [SurvivorController::class, 'updateSurvivorLocation'])
+    ->name('survivors.update.last_location');
+Route::post('survivors/flag-survivor-infected', [ReportController::class, 'flagSurvivorAsInfected'])
+    ->name('flag_survivor_infected');
+Route::post('survivors/trade', [TradeController::class, 'trade'])
+    ->name('trade');
+Route::get('items', [TradeController::class, 'indexItems'])
+    ->name('get_items');
+Route::get('resume-reports', [ReportController::class, 'index'])
+    ->name('get_resume_reports');
